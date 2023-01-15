@@ -16,9 +16,10 @@ import { FileInterceptor } from '@nestjs/platform-express/multer';
 import { JwtAuthGuard } from '../auth/jwt-auth.stategy';
 import { StoreService } from './store.service';
 import { multerOptions } from '../../utils/file-upload';
-import { StoreDto } from './store.dto';
+import { StoreDto, StoreFilterDto } from './store.dto';
 import { AuthUser } from 'src/decorators/authUser.decorator';
 import { User } from '../user/user.entity';
+import { Query } from '@nestjs/common/decorators';
 
 @Controller('store')
 export class StoreController {
@@ -26,8 +27,8 @@ export class StoreController {
 
   @Get()
   @UseGuards(JwtAuthGuard)
-  async index(@Req() req: any) {
-    return this.service.findAll(req);
+  async index(@Query() query: StoreFilterDto, @AuthUser() user: User) {
+    return this.service.findAll(query, user);
   }
 
   @Get(':id')

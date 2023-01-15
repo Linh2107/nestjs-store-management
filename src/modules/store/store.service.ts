@@ -2,7 +2,7 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DriverPackageNotInstalledError, Repository } from 'typeorm';
 import { Store } from './store.entity';
-import { StoreDto } from './store.dto';
+import { StoreDto, StoreFilterDto } from './store.dto';
 import { v4 as uuid } from 'uuid';
 import { User } from '../user/user.entity';
 import {
@@ -18,10 +18,7 @@ export class StoreService {
     @InjectRepository(Store) private readonly repository: Repository<Store>,
   ) {}
 
-  findAll(request): Promise<Pagination<Store>> {
-    console.log(request.user);
-    const query = request.query;
-
+  findAll(query: StoreFilterDto, user): Promise<Pagination<Store>> {
     const paginateOptions: IPaginationOptions = {
       page: query.page || 1,
       limit: query.limit || PER_PAGE,
@@ -29,7 +26,11 @@ export class StoreService {
 
     const queryBuilder = this.repository
       .createQueryBuilder('s')
-      .where('s.userId = :userId', { userId: request.user.id });
+      .where('s.userId = :userId', { userId: user.id });
+
+    if (query.name) {
+      queryBuilder.where('p.name LIKE :name', { name: `%${query.name}%` });
+    }
 
     return paginate<Store>(queryBuilder, paginateOptions);
   }

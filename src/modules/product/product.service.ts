@@ -8,7 +8,7 @@ import {
 import { DataSource, Repository } from 'typeorm';
 import { Product, Image } from './product.entity';
 import { PER_PAGE } from '../../contants';
-import { ProductDto, ProductImageDto } from './product.dto';
+import { ProductDto, ProductFilterDto, ProductImageDto } from './product.dto';
 import { User } from '../user/user.entity';
 import { v4 as uuid } from 'uuid';
 // import {
@@ -23,9 +23,7 @@ export class ProductService {
     private readonly dataSource: DataSource,
   ) {}
 
-  async findAll(request): Promise<Pagination<Product>> {
-    const query = request.query;
-
+  async findAll(query: ProductFilterDto, user): Promise<Pagination<Product>> {
     const paginateOptions: IPaginationOptions = {
       page: query.page || 1,
       limit: query.limit || PER_PAGE,
@@ -34,7 +32,21 @@ export class ProductService {
     const queryBuilder = this.repository
       .createQueryBuilder('p')
       .leftJoin('p.store', 'store')
-      .where('store.userId = :userId', { userId: request.user.id });
+      .where('store.userId = :userId', { userId: user.id });
+
+    if (query.name) {
+      queryBuilder.andWhere('p.name LIKE :name', { name: `%${query.name}%` });
+    }
+    if (query.minPrice) {
+      queryBuilder.andWhere('p.price >= :minPrice', {
+        minPrice: query.minPrice,
+      });
+    }
+    if (query.maxPrice) {
+      queryBuilder.andWhere('p.price <= :maxPrice', {
+        maxPrice: query.maxPrice,
+      });
+    }
 
     return paginate(queryBuilder, paginateOptions);
   }

@@ -5,6 +5,7 @@ import {
   Min,
   IsOptional,
   IsString,
+  IsNumber,
 } from 'class-validator';
 import { Transform } from 'class-transformer';
 import * as santizeHtml from 'sanitize-html';
@@ -47,4 +48,31 @@ export class ProductImageDto {
   @IsNotEmpty()
   @IsInt()
   productId: number;
+}
+
+export class ProductFilterDto {
+  @IsOptional()
+  @IsString()
+  name: string;
+
+  @IsOptional()
+  @IsInt()
+  @Transform(({ value }) => parseInt(value))
+  minPrice: number;
+
+  @IsOptional()
+  @IsInt()
+  @IsOptional()
+  @Transform(({ value }) => parseInt(value))
+  maxPrice: number;
+
+  @IsOptional()
+  @IsInt()
+  @Transform(({ value }) => parseInt(value))
+  page: number;
+
+  @IsOptional()
+  @IsInt()
+  @Transform(({ value }) => parseInt(value))
+  limit: number;
 }

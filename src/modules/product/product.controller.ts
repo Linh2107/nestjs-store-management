@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Query,
   Get,
   Put,
   Param,
@@ -17,7 +18,7 @@ import { AuthUser } from 'src/decorators/authUser.decorator';
 import { multerOptions } from 'src/utils/file-upload';
 import { JwtAuthGuard } from '../auth/jwt-auth.stategy';
 import { User } from '../user/user.entity';
-import { ProductDto } from './product.dto';
+import { ProductDto, ProductFilterDto } from './product.dto';
 import { ProductService } from './product.service';
 
 @Controller('product')
@@ -26,8 +27,8 @@ export class ProductController {
 
   @Get()
   @UseGuards(JwtAuthGuard)
-  async index(@Req() req: any) {
-    return this.service.findAll(req);
+  async index(@Query() query: ProductFilterDto, @AuthUser() user: User) {
+    return this.service.findAll(query, user);
   }
 
   @Get(':id')
