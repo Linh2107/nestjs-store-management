@@ -1,0 +1,481 @@
+{
+	"info": {
+		"_postman_id": "b869fe1c-ccf6-4557-9da6-64eaf3b51e4b",
+		"name": "Nestjs_store_management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19200637"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = JSON.parse(responseBody)\r",
+							"pm.environment.set('token', 'Bearer '+ res.accessToken)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"linhhhh\",\r\n    \"email\": \"linh11@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api}}/auth/register",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = JSON.parse(responseBody)\r",
+							"pm.environment.set('token', 'Bearer '+ res.accessToken)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"linh@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api}}/auth/login",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get store list",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{api}}/store",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"store"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Store",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{api}}/store/31",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"store",
+						"31"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Store",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Test 5552",
+							"type": "text"
+						},
+						{
+							"key": "logo",
+							"type": "file",
+							"src": "/C:/Users/Admin/Downloads/85dbcb94032623f99f87fd8d385523a5.jpg",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/store",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"store"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Store",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Test update34",
+							"type": "text"
+						},
+						{
+							"key": "logo",
+							"value": "uploads\\\\521ad29c-78f7-44ae-8d23-e04ce88dc66e.jpg",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/store/31",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"store",
+						"31"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete store",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/store/32",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"store",
+						"32"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get product list",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{api}}/product",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get product by id",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{api}}/product/451",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"product",
+						"451"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create product",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "displayImage",
+							"type": "file",
+							"src": "/C:/Users/Admin/Downloads/85dbcb94032623f99f87fd8d385523a5.jpg"
+						},
+						{
+							"key": "images",
+							"type": "file",
+							"src": "/C:/Users/Admin/Downloads/ech-xanh-danh-ban-han-vet-tay-giong-nhu-nguoi-mat-tho-226c81dd41048126471fc3f3861b73c4.jpg"
+						},
+						{
+							"key": "images",
+							"type": "file",
+							"src": "/C:/Users/Admin/Downloads/273383670_2264551640349303_2792556177635652866_n.jpg"
+						},
+						{
+							"key": "images",
+							"type": "file",
+							"src": "/C:/Users/Admin/Downloads/274480891_2273397689464698_313268672322877284_n.jpg"
+						},
+						{
+							"key": "name",
+							"value": "New product",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "100",
+							"type": "text"
+						},
+						{
+							"key": "amount",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "content",
+							"value": "<p>Test <script>alert('a');</script></p>",
+							"type": "text"
+						},
+						{
+							"key": "storeId",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{api}}/product",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update product",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "displayImage",
+							"type": "file",
+							"src": "/C:/Users/Admin/Downloads/85dbcb94032623f99f87fd8d385523a5.jpg"
+						},
+						{
+							"key": "images",
+							"value": "uploads\\\\44f65cc0-09e2-46c2-bfd8-2e5ea25608bc.jpg",
+							"type": "text"
+						},
+						{
+							"key": "images",
+							"type": "file",
+							"src": "/C:/Users/Admin/Downloads/274480891_2273397689464698_313268672322877284_n.jpg"
+						},
+						{
+							"key": "images",
+							"type": "file",
+							"src": "/C:/Users/Admin/Downloads/273383670_2264551640349303_2792556177635652866_n.jpg"
+						},
+						{
+							"key": "name",
+							"value": "New product updated 12",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "100",
+							"type": "text"
+						},
+						{
+							"key": "amount",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "content",
+							"value": "<p>Test1  <script>alert('a');</script></p>",
+							"type": "text"
+						},
+						{
+							"key": "storeId",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "images",
+							"value": "test",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{api}}/product/452",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"product",
+						"452"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete product",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{api}}/product/452",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"product",
+						"452"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
