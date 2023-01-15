@@ -29,7 +29,7 @@ export class StoreService {
       .where('s.userId = :userId', { userId: user.id });
 
     if (query.name) {
-      queryBuilder.where('p.name LIKE :name', { name: `%${query.name}%` });
+      queryBuilder.andWhere('s.name LIKE :name', { name: `%${query.name}%` });
     }
 
     return paginate<Store>(queryBuilder, paginateOptions);
